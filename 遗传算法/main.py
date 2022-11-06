@@ -4,7 +4,7 @@ import visualize
 
 #全局变量定义
 population_number = 40 #初始种群数量
-iter_times = 100 #遗传代数
+iter_times = 1 #遗传代数
 machine_number = 6 #机器数量
 job_number = 8 #工件数量
 process_number = 4 #工序数量
@@ -55,7 +55,7 @@ def calculateFitness(chromosome: list[int], data_set: list[list[int]]):
         sum_time[cur_machine] = start_time[i] + t
     # print(process_index)
     # print(sum_time)
-    fit_ness = 1 / max(sum_time) #适应度等于1/最大时间
+    fit_ness = 1 / max(sum_time) #适应度=1/最大时间
     return fit_ness, gantt_data
 
 
@@ -111,22 +111,10 @@ def selectIndividual(population: list[list[int]], data_set: list[list[int]]) -> 
     return best_chomosome
 
 
-if __name__ == '__main__':
-    # 读文件数据
-    df = pd.read_excel('作业调度案例2.xlsx', sheet_name='Sheet2')
-    data_set = df.iloc[1:, 1:].to_numpy().tolist()
-    # print(data_set)
-    #[[5, 2, 5, 7, 3, 9, 3, 9],
-    # [3, 4, 3, 1, 2, 1, 4, 3],
-    # [2, 4, 5, 1, 4, 4, 3, 2],
-    # [3, 1, 1, 1, 2, 3, 4, 4],
-    # [0, 5, 3, 1, 5, 5, 0, 4],
-    # [4, 2, 4, 2, 5, 5, 2, 5],
-    # [2, 2, 2, 3, 2, 2, 5, 4],
-    # [2, 1, 0, 3, 3, 2, 4, 1]]
-    population = initPopulation(data_set) #初始化种群 初始种群数量40
-
-    # 我的遗传算法
+'''
+我的遗传算法
+'''
+def myGa(population, data_set, iter_times):
     for _ in range(iter_times): #迭代次数
         next_generation = [] #下一代种群
         for _ in range(int(population_number/2)):
@@ -159,3 +147,21 @@ if __name__ == '__main__':
     #  6: [[2, 0, 2], [2, 25, 28], [2, 28, 30], [5, 30, 34]],
     #  7: [[2, 6, 7], [0, 7, 10], [3, 11, 13], [4, 13, 14]]}
     visualize.plot_gantt(gantt_data) #画甘特图
+
+
+
+if __name__ == '__main__':
+    # 读文件数据
+    df = pd.read_excel('作业调度案例2.xlsx', sheet_name='Sheet2')
+    data_set = df.iloc[1:, 1:].to_numpy().tolist()
+    # print(data_set)
+    #[[5, 2, 5, 7, 3, 9, 3, 9],
+    # [3, 4, 3, 1, 2, 1, 4, 3],
+    # [2, 4, 5, 1, 4, 4, 3, 2],
+    # [3, 1, 1, 1, 2, 3, 4, 4],
+    # [0, 5, 3, 1, 5, 5, 0, 4],
+    # [4, 2, 4, 2, 5, 5, 2, 5],
+    # [2, 2, 2, 3, 2, 2, 5, 4],
+    # [2, 1, 0, 3, 3, 2, 4, 1]]
+    population = initPopulation(data_set) #初始化种群
+    myGa(population, data_set, iter_times)

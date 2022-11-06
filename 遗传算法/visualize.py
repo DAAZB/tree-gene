@@ -5,11 +5,11 @@ import main
 
 def plot_gantt(gantt_data: dict):
     colors = ['#FF00FF', '#BD7AFF', '#0080FF', '#00FFFF', '#00FF80', '#FFFF00', '#FF8000', '#FF0000'] #配色方案
-    plt.figure(figsize = (9,4), dpi = 200).subplots_adjust(right=0.8) #画布大小和分辨率
+    plt.figure(figsize = (8,4), dpi = 200).subplots_adjust(right=0.8) #画布大小和分辨率
     for key in gantt_data: #循环绘制方块
         data = gantt_data[key]
         for time_set in data:
-            plt.barh(time_set[0], time_set[2]-time_set[1], 1, left=time_set[1], color = colors[key])
+            plt.barh(time_set[0], time_set[2]-time_set[1], 1, left=time_set[1], color = colors[key], edgecolor = 'white', lw = 0.2)
     labels = ['job' + str(i) for i in range(main.job_number)]
     patches = [mpatches.Patch(color=colors[i], label = '{:s}'.format(labels[i])) for i in range(main.job_number)]
     plt.legend(handles = patches, loc = 3, bbox_to_anchor = (1.05, 0), borderaxespad = 0) #添加图例

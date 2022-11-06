@@ -12,8 +12,12 @@ import visualize
 '''
 def createDataSet():
     df = pd.read_excel('训练集.xlsx')
+    tdf = pd.read_excel('测试集.xlsx') #测试集数据
     labels = df.columns.to_list()[:-1] #特征标签
     data_set = df.to_numpy().tolist() #特征向量列表
+    # data_set += tdf.to_numpy().tolist() #加入测试集数据
+
+
     return data_set, labels
 
 
@@ -21,12 +25,9 @@ def createDataSet():
 计算经验熵
 '''
 def calcShannonEnt(data_set: list[list]) -> float:
-    #训练数据集的行数
     n = len(data_set)
-    #存放分类种类及其个数
-    label_count = {}
-    #统计各分类出现的频次
-    for data in data_set:
+    label_count = {} #存放分类种类及其个数
+    for data in data_set: #统计各分类出现的频次
         temp_label = data[-1]
         if temp_label not in label_count.keys():
             label_count[temp_label] = 0
@@ -144,14 +145,10 @@ if __name__=='__main__':
     # print(feat_labels)
     visualize.createPlot(my_tree) #可视化决策树
 
-
     # 测试数据
     tdf = pd.read_excel('测试集.xlsx', usecols = feat_labels) #只读决策树判断需要的特征值
-    # print(tdf)
     tdf = tdf[feat_labels] #按决策树判断顺序重新排列特征向量
-    # print(tdf)
     t_data_set = tdf.to_numpy().tolist() #转化为列表
-    # print(t_data_set)
     for vec in t_data_set:
         result = classify(my_tree, feat_labels, vec)
         if result=='是':

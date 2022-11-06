@@ -4,9 +4,6 @@ from matplotlib.font_manager import FontProperties
 '''
 获取决策树叶子结点的数目
 '''
-from matplotlib import pyplot as plt
-
-
 def getleavesNum(myTree: dict) -> int:
     leavesNum = 0
     firstStr = next(iter(myTree))
@@ -41,8 +38,8 @@ def getTreeDepth(myTree: dict) -> int:
 绘制决策树
 '''
 def plotTree(tree, parentPt, nodeTxt):
-    decisionNode = dict(boxstyle = 'roundtooth', fc = '0.8') #设置结点格式
-    leafNode = dict(boxstyle = 'round4', fc = '0.8') #设置叶子节点格式
+    decisionNode = dict(boxstyle = 'roundtooth', fc = 'white') #设置结点格式
+    leafNode = dict(boxstyle = 'round4', fc = 'white') #设置叶子节点格式
     leavesNum = getleavesNum(tree)
     depth = getTreeDepth(tree)
     firstStr = next(iter(tree))
@@ -61,7 +58,6 @@ def plotTree(tree, parentPt, nodeTxt):
     plotTree.yOff = plotTree.yOff + 1.0/plotTree.totalD
 
 
-
 '''
 创建绘制面板
 '''
@@ -76,6 +72,7 @@ def createPlot(tree):
     plotTree(tree, (0.5,1.0), '') #绘制决策树
     plt.show() #显示绘制结果
 
+
 '''
 绘制结点
 '''
@@ -85,6 +82,7 @@ def plotNode(nodeTxt, centerPt, parentPt, nodeType):
     createPlot.ax1.annotate(nodeTxt, xy=parentPt,  xycoords='axes fraction',    #绘制结点
         xytext=centerPt, textcoords='axes fraction',
         va="center", ha="center", bbox=nodeType, arrowprops=arrow_args, fontproperties=font)
+
 
 '''
 标注有向边属性的值
