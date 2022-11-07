@@ -2,7 +2,6 @@ from copy import copy
 import pandas as pd
 from math import log
 import operator
-
 import visualize
 
 

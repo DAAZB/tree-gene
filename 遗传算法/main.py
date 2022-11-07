@@ -52,7 +52,7 @@ def calculateFitness(chromosome: list[int], data_set: list[list[int]]):
         start_time[i] = sum_time[cur_machine] if process_index[i] == 1 else max(end_time[i], sum_time[cur_machine])
         end_time[i] = start_time[i] + t
         gantt_data[i].append([cur_machine, start_time[i], end_time[i]]) #[机器序号，开始时间，结束时间]
-        sum_time[cur_machine] = start_time[i] + t
+        sum_time[cur_machine] = end_time[i]
     # print(process_index)
     # print(sum_time)
     fit_ness = 1 / max(sum_time) #适应度=1/最大时间
